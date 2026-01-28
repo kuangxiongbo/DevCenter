@@ -41,7 +41,9 @@ import {
   Send,
   Minimize2,
   ThumbsUp,
-  ThumbsDown
+  ThumbsDown,
+  User,
+  Tag
 } from 'lucide-react';
 
 export {
@@ -86,5 +88,7 @@ export {
   Send,
   Minimize2,
   ThumbsUp,
-  ThumbsDown
+  ThumbsDown,
+  User,
+  Tag
 };

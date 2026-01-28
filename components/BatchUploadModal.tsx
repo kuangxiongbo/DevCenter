@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { UploadCloud, FileText, X, Check, ChevronDown } from './Icons';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -54,7 +55,7 @@ const BatchUploadModal: React.FC<BatchUploadModalProps> = ({ isOpen, onClose, on
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.files) {
-          const newFiles = Array.from(e.target.files).filter(f => f.name.endsWith('.md'));
+          const newFiles = Array.from(e.target.files).filter((f: any) => f.name.endsWith('.md')) as File[];
           setFiles(prev => [...prev, ...newFiles]);
       }
   };
