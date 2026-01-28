@@ -23,6 +23,8 @@ export interface Doc {
   status: DocStatus;
   author: string;
   version?: string;
+  helpfulCount?: number;
+  unhelpfulCount?: number;
 }
 
 export interface DocVersion {

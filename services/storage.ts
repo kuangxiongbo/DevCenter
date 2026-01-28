@@ -1,3 +1,4 @@
+
 import { Doc, DocStatus, Category, TopNavItem, User, DocVersion, Product, WeChatConfig, AIConfig } from '../types';
 
 const STORAGE_KEYS = {
@@ -69,7 +70,9 @@ const SEED_DOCS: Doc[] = [
     status: DocStatus.PUBLISHED,
     author: 'Admin',
     version: '1.1',
-    content: `# 概述\n\n本文档预期读者为项目经理、产品经理、研发人员与测试人员。`
+    content: `# 概述\n\n本文档预期读者为项目经理、产品经理、研发人员与测试人员。`,
+    helpfulCount: 5,
+    unhelpfulCount: 0
   },
   // ... (assume existing docs remain)
 ];
@@ -141,6 +144,20 @@ export const deleteDoc = (id: string): void => {
   const docs = getDocs();
   const newDocs = docs.filter(d => d.id !== id);
   localStorage.setItem(STORAGE_KEYS.DOCS, JSON.stringify(newDocs));
+};
+export const submitFeedback = (docId: string, isHelpful: boolean): void => {
+  const docs = getDocs();
+  const index = docs.findIndex(d => d.id === docId);
+  if (index >= 0) {
+    const doc = docs[index];
+    if (isHelpful) {
+      doc.helpfulCount = (doc.helpfulCount || 0) + 1;
+    } else {
+      doc.unhelpfulCount = (doc.unhelpfulCount || 0) + 1;
+    }
+    docs[index] = doc;
+    localStorage.setItem(STORAGE_KEYS.DOCS, JSON.stringify(docs));
+  }
 };
 
 export const getDocVersions = (docId: string): DocVersion[] => {

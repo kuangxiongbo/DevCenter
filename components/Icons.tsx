@@ -1,3 +1,4 @@
+
 import { 
   Book, 
   ChevronRight, 
@@ -38,7 +39,9 @@ import {
   Loader2,
   MessageSquare,
   Send,
-  Minimize2
+  Minimize2,
+  ThumbsUp,
+  ThumbsDown
 } from 'lucide-react';
 
 export {
@@ -81,5 +84,7 @@ export {
   Loader2,
   MessageSquare,
   Send,
-  Minimize2
+  Minimize2,
+  ThumbsUp,
+  ThumbsDown
 };

@@ -1,12 +1,13 @@
+
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { getDocBySlug, getCategories, getDocs } from '../services/storage';
+import { getDocBySlug, getCategories, getDocs, submitFeedback } from '../services/storage';
 import { Doc } from '../types';
 import { format } from 'date-fns';
-import { Check, ChevronRight, Copy } from '../components/Icons';
+import { Check, ChevronRight, Copy, ThumbsUp, ThumbsDown } from '../components/Icons';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useProduct } from '../contexts/ProductContext';
 
@@ -124,9 +125,11 @@ const DocViewer: React.FC = () => {
   const { t, language } = useLanguage();
   const { setProductId, setTopNavId } = useProduct();
   const navigate = useNavigate();
+  const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
 
   useEffect(() => {
     setLoading(true);
+    setFeedbackSubmitted(false); // Reset feedback on doc change
     let foundDoc = getDocBySlug(slug || 'getting-started');
     
     // Auto-recovery: If default doc is missing, find any doc to show
@@ -152,6 +155,13 @@ const DocViewer: React.FC = () => {
 
     setLoading(false);
   }, [slug]);
+
+  const handleFeedback = (isHelpful: boolean) => {
+    if (doc && !feedbackSubmitted) {
+        submitFeedback(doc.id, isHelpful);
+        setFeedbackSubmitted(true);
+    }
+  };
 
   if (loading) {
     return <div className="p-12 text-center text-slate-400">Loading...</div>;
@@ -223,15 +233,29 @@ const DocViewer: React.FC = () => {
 
         <div className="mt-16 pt-8 border-t border-slate-200">
             <h3 className="text-lg font-semibold text-slate-900 mb-4">{t('doc.helpful.title')}</h3>
-            <div className="flex gap-4">
-                <button className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg hover:border-brand-500 hover:text-brand-600 transition-all shadow-sm">
-                    <Check className="w-4 h-4" />
-                    {t('doc.helpful.yes')}
-                </button>
-                <button className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg hover:border-slate-400 hover:text-slate-700 transition-all shadow-sm">
-                    {t('doc.helpful.no')}
-                </button>
-            </div>
+            {feedbackSubmitted ? (
+                 <div className="p-4 bg-green-50 text-green-700 rounded-lg border border-green-100 flex items-center gap-2 w-fit animate-[fadeIn_0.3s_ease-out]">
+                    <Check className="w-5 h-5" />
+                    <span className="font-medium">{t('doc.helpful.thanks')}</span>
+                 </div>
+            ) : (
+                <div className="flex gap-4">
+                    <button 
+                        onClick={() => handleFeedback(true)}
+                        className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg hover:border-brand-500 hover:text-brand-600 hover:shadow-md transition-all shadow-sm"
+                    >
+                        <ThumbsUp className="w-4 h-4" />
+                        {t('doc.helpful.yes')}
+                    </button>
+                    <button 
+                        onClick={() => handleFeedback(false)}
+                        className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg hover:border-slate-400 hover:text-slate-700 hover:shadow-md transition-all shadow-sm"
+                    >
+                        <ThumbsDown className="w-4 h-4" />
+                        {t('doc.helpful.no')}
+                    </button>
+                </div>
+            )}
         </div>
     </div>
   );

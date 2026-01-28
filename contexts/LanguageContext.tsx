@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 export type Language = 'zh' | 'en';
@@ -26,6 +27,7 @@ const translations: Record<Language, Record<string, string>> = {
     'doc.helpful.title': '这篇文档对你有帮助吗？',
     'doc.helpful.yes': '有帮助',
     'doc.helpful.no': '没帮助',
+    'doc.helpful.thanks': '感谢您的反馈！',
     'doc.notFound': '页面未找到',
     'doc.notFoundDesc': '您正在寻找的文档不存在，或者已被删除。',
     'doc.returnHome': '返回首页',
@@ -48,6 +50,7 @@ const translations: Record<Language, Record<string, string>> = {
     'admin.table.status': '状态',
     'admin.table.lastUpdated': '最后更新',
     'admin.table.actions': '操作',
+    'admin.table.feedback': '反馈数据',
     'admin.noDocs': '未找到文档。',
     'admin.deleteConfirm': '确定要删除此项吗？',
     'admin.batchDeleteConfirm': '确定要删除选中的 {count} 个文档吗？此操作不可恢复。',
@@ -230,6 +233,7 @@ const translations: Record<Language, Record<string, string>> = {
     'doc.helpful.title': 'Was this document helpful?',
     'doc.helpful.yes': 'Yes, it helped',
     'doc.helpful.no': 'No, I need more info',
+    'doc.helpful.thanks': 'Thanks for your feedback!',
     'doc.notFound': 'Page Not Found',
     'doc.notFoundDesc': 'The documentation you are looking for does not exist or has been deleted.',
     'doc.returnHome': 'Return Home',
@@ -252,6 +256,7 @@ const translations: Record<Language, Record<string, string>> = {
     'admin.table.status': 'Status',
     'admin.table.lastUpdated': 'Last Updated',
     'admin.table.actions': 'Actions',
+    'admin.table.feedback': 'Feedback',
     'admin.noDocs': 'No documents found.',
     'admin.deleteConfirm': 'Are you sure you want to delete this item?',
     'admin.batchDeleteConfirm': 'Are you sure you want to delete {count} items? This cannot be undone.',
